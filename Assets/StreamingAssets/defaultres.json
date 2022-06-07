@@ -1,0 +1,3 @@
+[{"name":"木头","storageLimt":100.0,"baseIncome":1.0,"tool":["手","木斧","石斧"]},
+{"name":"石头","storageLimt":100.0,"baseIncome":1.0,"tool":["木稿","石稿"]},
+{"name":"煤炭","storageLimt":100.0,"baseIncome":1.0,"tool":["简易熔炉"]}]

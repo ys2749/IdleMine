@@ -1,0 +1,74 @@
+[
+    {
+        "Name":"铁锭",
+        "Formula":"1*铁矿+10*煤炭 = 1*铁锭",
+        "InputItem":["0002","1001"],
+        "InputAmount":[10,1],
+        "OutputItem":["2001"],
+        "OutputAmount":[1],
+        "Time":10
+    },
+    {
+        "Name":"铝锭",
+        "Formula":"2*铝矿+10*煤炭 = 1*铝锭",
+        "InputItem":["0002","1004"],
+        "InputAmount":[10,2],
+        "OutputItem":["2004"],
+        "OutputAmount":[1],
+        "Time":10
+    },
+    {
+        "Name":"铁板",
+        "Formula":"2*铁锭 = 1*铁板",
+        "InputItem":["2001"],
+        "InputAmount":[2],
+        "OutputItem":["3001"],
+        "OutputAmount":[1],
+        "Time":5
+    },
+    {
+        "Name":"铁剑",
+        "Formula":"3*铁板 = 1*铁剑",
+        "InputItem":["3001"],
+        "InputAmount":[3],
+        "OutputItem":["10001"],
+        "OutputAmount":[1],
+        "Time":5
+    },
+    {
+        "Name":"铁头盔",
+        "Formula":"5*铁板 = 1*铁头盔",
+        "InputItem":["3001"],
+        "InputAmount":[5],
+        "OutputItem":["10101"],
+        "OutputAmount":[1],
+        "Time":5
+    },
+    {
+        "Name":"铁胸甲",
+        "Formula":"8*铁板 = 1*铁胸甲",
+        "InputItem":["3001"],
+        "InputAmount":[8],
+        "OutputItem":["10201"],
+        "OutputAmount":[1],
+        "Time":5
+    },
+    {
+        "Name":"铁护腿",
+        "Formula":"7*铁板 = 1*铁护腿",
+        "InputItem":["3001"],
+        "InputAmount":[7],
+        "OutputItem":["10301"],
+        "OutputAmount":[1],
+        "Time":5
+    },
+    {
+        "Name":"铁靴子",
+        "Formula":"4*铁板 = 1*铁靴子",
+        "InputItem":["3001"],
+        "InputAmount":[4],
+        "OutputItem":["10401"],
+        "OutputAmount":[1],
+        "Time":5
+    }
+]

@@ -1,0 +1,31 @@
+[
+    
+    {
+            "HP":20,
+            "Attack":8,
+            "Defense":5,
+            "ID":0,
+            "Name":"僵尸矿工",
+            "DropItemName":"1001",
+            "DropItemProp":0.5
+    },
+    {
+            "HP":30,
+            "Attack":15,
+            "Defense":5,
+            "ID":1,
+            "Name":"僵尸守卫",
+            "DropItemName":"1001",
+            "DropItemProp":1
+    },
+        {
+                "HP":50,
+                "Attack":30,
+                "Defense":10,
+                "ID":2,
+                "Name":"僵尸首领",
+                "DropItemName":"1005",
+                "DropItemProp":0.5
+        }
+    
+]

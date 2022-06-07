@@ -1,0 +1,14 @@
+﻿[
+    {
+        "name":"木头",
+        "storageLimt":100,
+        "baseIncome":1,
+        "tool":[]
+    },
+    {
+        "name":"石头",
+        "storageLimt":100,
+        "baseIncome":1,
+        "tool":[]
+    }
+]

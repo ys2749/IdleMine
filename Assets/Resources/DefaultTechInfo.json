@@ -1,0 +1,108 @@
+[
+    {
+        "ID":0,
+        "unlockable":1,
+        "unlocked":0,
+        "description":"Unlock Various Wood Tool. Cost 10 Wood.",
+        "costRes":[
+            10,
+            0,
+            0
+        ],
+        "unlockTechID":[
+            1,
+            2,
+            3
+        ]
+    },
+    {
+        "ID":1,
+        "unlockable":0,
+        "unlocked":0,
+        "description":"Unlock Wood Axe,wood base +1. Cost 50 Wood.",
+        "costRes":[
+            50,
+            0,
+            0
+        ],
+        "unlockTechID":[
+
+        ]
+    },
+    {
+        "ID":2,
+        "unlockable":0,
+        "unlocked":0,
+        "description":"Unlock Wood Pickaxe, could mine Stone. Cost 50 Wood.",
+        "costRes":[
+            50,
+            0,
+            0
+        ],
+        "unlockTechID":[
+            4
+        ]
+    },
+    {
+        "ID":3,
+        "unlockable":0,
+        "unlocked":0,
+        "description":"Unlock Wood chest, Increase Storage Limit. Cost 50 Wood.",
+        "costRes":[
+            50,
+            0,
+            0
+        ],
+        "unlockTechID":[
+
+        ]
+    },
+    {
+        "ID":4,
+        "unlockable":0,
+        "unlocked":0,
+        "description":"Unlock Various Stone Tool. Cost 50 stone.",
+        "costRes":[
+            0,
+            50,
+            0
+        ],
+        "unlockTechID":[]
+    },
+    {
+        "ID":5,
+        "unlockable":0,
+        "unlocked":0,
+        "description":"Unlock Stone Axe,wood base +1. Cost 50 Stone.",
+        "costRes":[
+            0,
+            50,
+            0
+        ],
+        "unlockTechID":[]
+    },
+    {
+        "ID":6,
+        "unlockable":0,
+        "unlocked":0,
+        "description":"Unlock Stone PixAxe,stone base +1. Cost 50 Stone.",
+        "costRes":[
+            0,
+            50,
+            0
+        ],
+        "unlockTechID":[]
+    },
+    {
+        "ID":7,
+        "unlockable":0,
+        "unlocked":0,
+        "description":"Unlock Stone Furnace,could make coal from wood. Cost 50 Stone.",
+        "costRes":[
+            0,
+            50,
+            0
+        ],
+        "unlockTechID":[]
+    }
+]
