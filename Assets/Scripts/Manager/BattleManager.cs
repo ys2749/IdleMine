@@ -23,11 +23,14 @@ public class BattleManager : Singleton<BattleManager>
     public List<int> pausedList;
     //public List<Coroutine> routineList;
 
-    public void initPlayerProp(){
-        PlayerProp = new PlayerProperty();
-        PlayerProp.HP = 30;
-        PlayerProp.Attack  = 10;
-        PlayerProp.Defense = 5;
+    // public void initPlayerProp(){
+    //     PlayerProp = new PlayerProperty();
+    //     PlayerProp.HP = 30;
+    //     PlayerProp.Attack  = 10;
+    //     PlayerProp.Defense = 5;
+    // }
+    public void UpdatePlayerProp(){
+        PlayerProp = PlayerManager.Instance.playerProp;
     }
 
     // public void initBattleProp(){
@@ -100,10 +103,10 @@ public class BattleManager : Singleton<BattleManager>
     {
         //player数据后期应从PlayerManager生成，暂时硬编码
         //initPlayerProp();
-        LoadTheGame();
+        //LoadTheGame();
         //initBattle();
-        UpdateBattleStatus();
-        AutoSave();
+        // UpdateBattleStatus();
+        // AutoSave();
         
     }
 
@@ -221,9 +224,9 @@ public class BattleManager : Singleton<BattleManager>
         streamWriter.Close();
 
     }
-    void LoadTheGame(){
+    public void LoadTheGame(){
         StartCoroutine(LoadEnemyPropList());
-        initPlayerProp();
+        UpdatePlayerProp();
         string filepathsave = Path.Combine(Application.persistentDataPath,"battleInfo.json");
         if(File.Exists(filepathsave)){
             StreamReader streamReader = new StreamReader(filepathsave);
@@ -243,6 +246,8 @@ public class BattleManager : Singleton<BattleManager>
             
             //initBattleProp();
         }
+        UpdateBattleStatus();
+        AutoSave();
     }
     IEnumerator LoadEnemyPropList(){
         string filepath = Path.Combine(Application.streamingAssetsPath,"DefaultEnemyProp.json");

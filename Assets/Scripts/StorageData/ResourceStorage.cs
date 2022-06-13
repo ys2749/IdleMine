@@ -56,9 +56,10 @@ public class BattleProperty{
 }
 [System.Serializable]
 public class PlayerProperty{
-    public float HP{get;set;}
-    public float Attack{get;set;}
-    public float Defense{get;set;}
+    public float HP;
+    public float Attack;
+    public float Defense;
+    public float Agility;
 }
 [System.Serializable]
 public class EnemyProperty{
@@ -103,6 +104,7 @@ public class EquipmentProperty{
     public string localID; //自动生成的unique ID 
     public string localName; //接受自定义输入
     public int equiped;  //是否已装备
+    public int locked; //锁定无法出售
     public int type;   //0武器1头2身体3腿4靴子
     public string material;
     public string enchantType;
@@ -128,6 +130,8 @@ public class EquipModifier{
     public float PierceResistPct;
     public float PoisonResistPct;
     public float EnderResistPct;
+    public string description;
+
 }
 [System.Serializable]
 public class CraftRecipe{

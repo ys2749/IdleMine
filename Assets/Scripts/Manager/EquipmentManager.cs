@@ -19,7 +19,11 @@ public class EquipmentManager : Singleton<EquipmentManager>
     public Dictionary<string,EquipModifier> EquipModifierDict;
     public List<EquipmentProperty> equipmentPropertyList;
     public List<EquipItem> equipItemList;
+    //以下四条动态生成，不落地
     public Dictionary<int,EquipItem>EquippedSlot; //记录当前有哪些位置已装备，不可再装备同类型。 不落地，动态生成。
+    public List<EquipModifier> EquippedSet;  //set本质上也是一件装备，等于额外隐藏装备
+    public EquipModifier EquippedSlotTotalModifier; //当前装备的加成总合，在PlayerManager中调用
+    public EquipModifier EquippedSetTotalModifier;  //当前套装效果，在PlayerManager中调用
     public int currentUniqueID;
     public string selectedItemLocalID;
     public int selectedItemOrder;
@@ -46,8 +50,78 @@ public class EquipmentManager : Singleton<EquipmentManager>
         newProp.type = TypeItbyID(newProp.ID);
         newProp.material = "iron"; //先写死，以后改
         newProp.equiped = 0;
+        newProp.locked = 0;
         //equipmentPropertyList.Add(newProp);
         AddEquipItem(newProp);
+    }
+
+    public void UpdateEquippedSlot(){
+        //根据equipItemList生成EquippedSlot
+        EquippedSlot = new Dictionary<int, EquipItem>();
+        foreach (var item in equipItemList)
+        {
+            if(item.prop.equiped == 1){
+                EquippedSlot.Add(item.prop.type,item);
+            }
+        }
+    }
+    public void UpdateEquippedSet(){
+        //根据现有装备生成套装
+        var tempMaterialDict = new Dictionary<string,int>();
+        if(EquippedSlot.Count>0){
+            foreach (EquipItem item in EquippedSlot.Values)
+            {
+                if(tempMaterialDict.ContainsKey(item.prop.material)){
+                    tempMaterialDict[item.prop.material] +=1;
+                }else{
+                    tempMaterialDict.Add(item.prop.material,1); 
+                }
+                
+            }
+        }
+        EquippedSet = new List<EquipModifier>();
+        foreach (KeyValuePair<string,int> kv in tempMaterialDict)
+        {
+           if(kv.Value==5){
+               EquippedSet.Add(EquipModifierDict[kv.Key+"2"]);
+               EquippedSet.Add(EquipModifierDict[kv.Key+"4"]);
+               EquippedSet.Add(EquipModifierDict[kv.Key+"5"]);              
+           }else if(kv.Value == 4){
+               EquippedSet.Add(EquipModifierDict[kv.Key+"2"]);
+               EquippedSet.Add(EquipModifierDict[kv.Key+"4"]);               
+           }else if(kv.Value>=2){
+               EquippedSet.Add(EquipModifierDict[kv.Key+"2"]);             
+           }else{
+
+           }
+        }
+    }
+    private void UpdateEquippedSlotAndSetTotalModifier(){
+        //根据EquippedSlot和EquippedSet生成totalmodifier
+        EquippedSlotTotalModifier = new EquipModifier();
+        EquippedSetTotalModifier = new EquipModifier();
+
+        foreach (var item in EquippedSlot.Values)
+        {
+            EquippedSlotTotalModifier.HPModifier += EquipModifierDict[item.prop.name].HPModifier;
+            EquippedSlotTotalModifier.AttackModifier += EquipModifierDict[item.prop.name].AttackModifier;
+            EquippedSlotTotalModifier.DefenseModifier += EquipModifierDict[item.prop.name].DefenseModifier;
+            EquippedSlotTotalModifier.AgilityModifier += EquipModifierDict[item.prop.name].AgilityModifier;
+        }
+        foreach (var item in EquippedSet)
+        {
+            EquippedSetTotalModifier.HPModifier += item.HPModifier;
+            EquippedSetTotalModifier.AttackModifier += item.AttackModifier;
+            EquippedSetTotalModifier.DefenseModifier += item.DefenseModifier;
+            EquippedSetTotalModifier.AgilityModifier += item.AgilityModifier;
+            EquippedSetTotalModifier.HPModifierPct += item.HPModifierPct;
+            EquippedSetTotalModifier.AttackModifierPct += item.AttackModifierPct;
+            EquippedSetTotalModifier.DefenseModifierPct += item.DefenseModifierPct;
+            EquippedSetTotalModifier.AgilityModifierPct += item.AgilityModifierPct;
+
+            EquippedSetTotalModifier.description += item.description;            
+        }
+
     }
     private void SaveLocalID(){
         PlayerPrefs.SetInt("currentUniqueID",currentUniqueID);
@@ -88,7 +162,8 @@ public class EquipmentManager : Singleton<EquipmentManager>
         EquipModifier tempSet5 = EquipModifierDict[tempProp.material+"5"];
 
         EquipItemBasicAttText.text = TranslateAttribute(tempMod);        
-        EquipSetAttText.text = "套装属性"+"\n2件套:"+TranslateAttribute(tempSet2)+"4件套:"+ TranslateAttribute(tempSet4)+"5件套:"+TranslateAttribute(tempSet5);
+        //EquipSetAttText.text = "套装属性"+"\n2件套:"+TranslateAttribute(tempSet2)+"4件套:"+ TranslateAttribute(tempSet4)+"5件套:"+TranslateAttribute(tempSet5);
+        EquipSetAttText.text = "套装属性"+"\n2件套:"+tempSet2.description+"4件套:"+ tempSet4.description+"5件套:"+tempSet5.description;
 
         if(equipItemList[selectedItemOrder].prop.equiped == 1){
             EquipBtnText.text = "卸除";
@@ -142,9 +217,18 @@ public class EquipmentManager : Singleton<EquipmentManager>
             tempItem.SetUI();
             EquippedSlot.Remove( equipItemList[selectedItemOrder].prop.type);
         }
+        UpdateEquippedSet();
+        UpdateEquippedSlotAndSetTotalModifier();
+        PlayerManager.Instance.UpdatePlayerProp();
     }
     public void OnClickSellBtn(){
-
+        if( equipItemList[selectedItemOrder].prop.equiped == 0){
+            Destroy(equipItemList[selectedItemOrder].gameObject);
+            equipItemList.RemoveAt(selectedItemOrder);
+        }
+    }
+    public void onClickLockBtn(){
+        
     }
     public void OnClickRenameBtn(){
 
@@ -154,13 +238,13 @@ public class EquipmentManager : Singleton<EquipmentManager>
         Invoke("AutoSave",1f);
     }
     void SaveTheGame(){
-        if(equipItemList.Count>0){
+        //if(equipItemList.Count>0){
             string filepathsave = Path.Combine(Application.persistentDataPath,"EquipInfo.json");
             StreamWriter streamWriter = new StreamWriter(filepathsave);
             List<EquipmentProperty> equipPropToSave = new List<EquipmentProperty>(equipItemList.Select(t => t.prop).ToList());
             streamWriter.Write(JsonMapper.ToJson(equipPropToSave));
             streamWriter.Close();
-        }
+        //}
     }
     public void LoadTheGame(){
         //该数据有上限，需定期重置。
@@ -169,10 +253,9 @@ public class EquipmentManager : Singleton<EquipmentManager>
         equipItemList = new List<EquipItem>();
         //将Gamemanager中的EquiModifier默认信息从List转化为Dictionary
         EquipModifierDict = new Dictionary<string, EquipModifier>();
-        EquippedSlot = new Dictionary<int, EquipItem>();
-
         foreach (EquipModifier item in GameManager.Instance.EquipModifiers)
         {
+            item.description = TranslateAttribute(item);
             EquipModifierDict.Add(item.Name,item);
         }
 
@@ -189,12 +272,9 @@ public class EquipmentManager : Singleton<EquipmentManager>
                 AddEquipItem(equipmentPropertyList[i]);
             }
         }
-        foreach (var item in equipItemList)
-        {
-            if(item.prop.equiped == 1){
-                EquippedSlot.Add(item.prop.type,item);
-            }
-        }
+        UpdateEquippedSlot();
+        UpdateEquippedSet();
+        UpdateEquippedSlotAndSetTotalModifier();
         AutoSave();
 
 

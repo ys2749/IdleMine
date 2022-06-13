@@ -89,5 +89,7 @@ public class GameManager : Singleton<GameManager>
         BagManager.Instance.LoadTheGame();
         CraftManager.Instance.LoadTheGame();
         EquipmentManager.Instance.LoadTheGame();
+        PlayerManager.Instance.LoadTheGame();
+        BattleManager.Instance.LoadTheGame();
     }
 }

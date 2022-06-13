@@ -11,21 +11,21 @@
     },
     {
             "HP":30,
-            "Attack":15,
-            "Defense":5,
+            "Attack":20,
+            "Defense":8,
             "ID":1,
             "Name":"僵尸守卫",
             "DropItemName":"1001",
             "DropItemProp":1
     },
         {
-                "HP":50,
-                "Attack":30,
-                "Defense":10,
+                "HP":100,
+                "Attack":50,
+                "Defense":15,
                 "ID":2,
                 "Name":"僵尸首领",
-                "DropItemName":"1005",
-                "DropItemProp":0.5
+                "DropItemName":"2006",
+                "DropItemProp":1
         }
     
 ]
